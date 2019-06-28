@@ -1,3 +1,5 @@
+# Clion
+.idea
 # CMake Stuff
 CMakeLists.txt.user
 CMakeCache.txt
@@ -9,6 +11,7 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
+cmake-build-debug
 _deps
 
 # OpenSim Generated Files

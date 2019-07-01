@@ -1,82 +1,76 @@
+#include <iostream>
 #include <OpenSim/OpenSim.h>
-using namespace SimTK;
-using namespace OpenSim;
+#include <OpenSim/Tools/ScaleTool.h>
+#include <OpenSim/Tools/InverseKinematicsTool.h>
+#include <OpenSim/Tools/InverseDynamicsTool.h>
 
 int main() {
-    Model model;
-    model.setName("bicep_curl");
-    model.setUseVisualizer(true);
+    // get the assets path
+    std::string assetsPath = "/home/mahan/Mahan/Projects/Unity2OpenSim/assets/";
 
-    // Create two links, each with a mass of 1 kg, center of mass at the body's
-    // origin, and moments and products of inertia of zero.
-    OpenSim::Body* humerus = new OpenSim::Body("humerus", 1, Vec3(0), Inertia(0));
-    OpenSim::Body* radius  = new OpenSim::Body("radius",  1, Vec3(0), Inertia(0));
+    // Scale to subject 1
+    {
+        // this outputs a new .osim file in the parent directory representing
+        // the new scaled up body geometry, here: "subject01_simbody.osim".
 
-    // Connect the bodies with pin joints. Assume each body is 1 m long.
-    PinJoint* shoulder = new PinJoint("shoulder",
-            // Parent body, location in parent, orientation in parent.
-            model.getGround(), Vec3(0), Vec3(0),
-            // Child body, location in child, orientation in child.
-            *humerus, Vec3(0, 1, 0), Vec3(0));
-    PinJoint* elbow = new PinJoint("elbow",
-            *humerus, Vec3(0), Vec3(0), *radius, Vec3(0, 1, 0), Vec3(0));
+        std::cout << "Scaling to subject in process ..." << std::endl;
 
-    // Add a muscle that flexes the elbow.
-    Millard2012EquilibriumMuscle* biceps = new
-        Millard2012EquilibriumMuscle("biceps", 200, 0.6, 0.55, 0);
-    biceps->addNewPathPoint("origin",    *humerus, Vec3(0, 0.8, 0));
-    biceps->addNewPathPoint("insertion", *radius,  Vec3(0, 0.7, 0));
+        // Note: 'gait2354_simbody.osim', path to original model, is hardcoded in the .xml
+        std::string scaleSetupFilePath(assetsPath + "subject01_Setup_Scale.xml");
+        std::unique_ptr<OpenSim::ScaleTool> subjectScaleSetup(new OpenSim::ScaleTool(scaleSetupFilePath));
+        subjectScaleSetup->run();
+        std::cout << "Scaling done." << std::endl;
+    }
 
-    // Add a controller that specifies the excitation of the muscle.
-    PrescribedController* brain = new PrescribedController();
-    brain->addActuator(*biceps);
-    // Muscle excitation is 0.3 for the first 0.5 seconds, then increases to 1.
-    brain->prescribeControlForActuator("biceps",
-            new StepFunction(0.5, 3, 0.3, 1));
+    // Inverse Kinematics
+    {
+        // this outputs a new .mot file in the parent directory, here specified 
+        // as "subject01_walk1_ik.mot", hardcoded in the IK .xlm file.
 
-    // Add components to the model.
-    model.addBody(humerus);    model.addBody(radius);
-    model.addJoint(shoulder);  model.addJoint(elbow);
-    model.addForce(biceps);
-    model.addController(brain);
+        std::cout << "Inverse Kinematics in process ..." << std::endl;
 
-    // Add a console reporter to print the muscle fiber force and elbow angle.
-    ConsoleReporter* reporter = new ConsoleReporter();
-    reporter->set_report_time_interval(1.0);
-    reporter->addToReport(biceps->getOutput("fiber_force"));
-    reporter->addToReport(
-        elbow->getCoordinate(PinJoint::Coord::RotationZ).getOutput("value"),
-        "elbow_angle");
-    model.addComponent(reporter);
+        OpenSim::InverseKinematicsTool::registerTypes();
 
-    // Add display geometry.
-    Ellipsoid bodyGeometry(0.1, 0.5, 0.1);
-    bodyGeometry.setColor(Gray);
-    // Attach an ellipsoid to a frame located at the center of each body.
-    PhysicalOffsetFrame* humerusCenter = new PhysicalOffsetFrame(
-        "humerusCenter", *humerus, Transform(Vec3(0, 0.5, 0)));
-    humerus->addComponent(humerusCenter);
-    humerusCenter->attachGeometry(bodyGeometry.clone());
-    PhysicalOffsetFrame* radiusCenter = new PhysicalOffsetFrame(
-        "radiusCenter", *radius, Transform(Vec3(0, 0.5, 0)));
-    radius->addComponent(radiusCenter);
-    radiusCenter->attachGeometry(bodyGeometry.clone());
+        // Note: 'subject01_simbody.osim', path to subject model, is hardcoded in the .xml
+        std::string iKSetupFilePath(assetsPath + "subject01_Setup_IK.xml");
+        std::unique_ptr<OpenSim::InverseKinematicsTool> subjectIKSetup(new OpenSim::InverseKinematicsTool(iKSetupFilePath, false));
+        subjectIKSetup->run();
+        std::cout << "Inverse Kinematics done." << std::endl;
+    }
+
+    // Inverse Dynamics
+    {
+
+        std::cout << "Inverse Dynamics in process ..." << std::endl;
+
+        // NOTE: 'subject01_walk1_grf.xml', path to external loads file, is hardcoded in the .xml file.
+        // NOTE: 'subject01_walk1_ik.mot', path to originall mocap file, is hardcoded in the .xml file.
+        std::string iDSetupFilePath(assetsPath + "subject01_Setup_InverseDynamics.xml");
+        std::unique_ptr<OpenSim::InverseDynamicsTool> subjectIDSetup(new OpenSim::InverseDynamicsTool(iDSetupFilePath, false));
+        subjectIDSetup->run();
+        std::cout << "Inverse Dynamics done." << std::endl;
+    }
+
+    // Load the model readily
+    OpenSim::Model *model = new OpenSim::Model(assetsPath + "subject01_simbody.osim");
+    std::cout << model->getJointSet() << std::endl;
+
+    model->setUseVisualizer(true);
 
     // Configure the model.
-    State& state = model.initSystem();
-    // Fix the shoulder at its default angle and begin with the elbow flexed.
-    shoulder->getCoordinate().setLocked(state, true);
-    elbow->getCoordinate().setValue(state, 0.5 * Pi);
-    model.equilibrateMuscles(state);
+    SimTK::State& state = model->initSystem();
+    model->equilibrateMuscles(state);
 
     // Configure the visualizer.
-    model.updMatterSubsystem().setShowDefaultGeometry(true);
-    Visualizer& viz = model.updVisualizer().updSimbodyVisualizer();
+//    model.updMatterSubsystem().setShowDefaultGeometry(true);
+    SimTK::Visualizer& viz = model->updVisualizer().updSimbodyVisualizer();
     viz.setBackgroundType(viz.SolidColor);
-    viz.setBackgroundColor(White);
+    viz.setBackgroundColor(SimTK::White);
+
+    std::cout << model->getAbsolutePath().toString() << std::endl;
 
     // Simulate.
-    simulate(model, state, 10.0);
+    OpenSim::simulate(*model, state, 10.0);
 
     return 0;
 };

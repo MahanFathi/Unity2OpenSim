@@ -6,6 +6,9 @@
 cmake_minimum_required(VERSION 2.8)
 project(opensim_test)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/assets)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/assets)
+
 # Set OpenSim Installation directory path, containing OpenSimConfig.cmake file here
 set(OpenSim_DIR /home/mahan/Libraries/opensim_install/lib64/cmake/OpenSim)
 
@@ -19,7 +22,7 @@ set(src main.cpp)
 find_package(OpenSim REQUIRED)
 
 # This is only necessary if Simbody was built using CMake older than 3.0.2.
-include_directories(${OpenSim_INCLUDE_DIR})
+include_directories(${OpenSim_INCLUDE_DIR} /home/mahan/Libraries/opensim-models-install/Geometry)
 
 add_executable(main ${src})
 target_link_libraries(main ${OpenSim_LIBRARIES})

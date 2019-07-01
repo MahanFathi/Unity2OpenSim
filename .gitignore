@@ -1,5 +1,12 @@
 # Clion
 .idea
+
+# VSCode
+.vscode
+
+# assets
+assets
+
 # CMake Stuff
 CMakeLists.txt.user
 CMakeCache.txt

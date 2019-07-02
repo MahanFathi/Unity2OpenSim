@@ -39,7 +39,7 @@ generates:
 * `subject01_ik_marker_errors.sto`:
     - new kinematics errors
 
-#### *Inverse Dynamics:* ``
+#### *Inverse Dynamics:* `subject01_Setup_InverseDynamics.xml`
 
 depends on:
 * *`subject01_simbody.osim`*:

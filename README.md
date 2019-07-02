@@ -1,16 +1,56 @@
-# Fixing missing polygons
+# Unity2OpenSim
 
-(1) Download Paraview and open .vtp file.
+This repo aims to provide the user with a painless pipeline to perform Inverse Kinematics/Dynamics of OpenSim on Unity models. 
 
-(3) Use hotkey (S) to switch on polygon selection, select incorrect polygons.
+### File Dependency Diagram (Sample: gait2354)
+Files mentioned are located in the assets folder.
+                                        
+#### *Scaling:* `subject01_Setup_Scale.xml`
 
-(4) Open Paraview Selection Display Inspector, select the Point Labels and ID. The selected Polygons will now show their coordinates.
+depends on: 
+* `gait2354_simbody.osim`:
+    - OpenSim original unscaled model
+* `gait2354_Scale_MarkerSet.xml`:
+    - original model marker definitions
+* `subject01_static.trc`:
+    - subject's marker point positions in stance? 
 
-(5) Open the .vtp file in a text editor and search for the three numbers seen in Paraview. Switch the 1st and 3rd numbers.
+generates:
+* `subject01_scaledOnly.osim`:
+    - some useless osim model
+* `subject01_scaleSet_applied.xml`:
+    - weights applied for scaling
+* `subject01_static_output.mot`:
+    - new stance mode?
+* `subject01_simbody.osim`*:
+    - new scaled osim model
 
-36 120 210 -> 210 10 210
+#### *Inverse Kinematics:* `subject01_Setup_IK.xml`
 
-There may be one or two sets of with these three numbers, change all.
+depends on:
+* *`subject01_simbody.osim`*:
+    - new scaled osim model
+* `subject01_walk1.trc`:
+    - kinematics of markers trajectory in the task
 
-36 120 210 -> 210 120 210
-210 36 120 -> 120 36 210
+generates:
+* `subject01_walk1_ik.mot`*:
+    - new kinematics results
+* `subject01_ik_marker_errors.sto`:
+    - new kinematics errors
+
+#### *Inverse Dynamics:* ``
+
+depends on:
+* *`subject01_simbody.osim`*:
+    - new scaled osim model
+* *`subject01_walk1_ik.mot`*:
+    - new kinematics results for the task
+* `subject01_walk1_grf.xml`*:
+    - dynamic ground reaction forces of the task
+    - depends on:
+        - `subject01_walk1_grf.mot`
+            - no idea
+        
+generates:
+* `ResultsInverseDynamics/inverse_dynamics.sto`:

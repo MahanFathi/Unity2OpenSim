@@ -54,3 +54,10 @@ depends on:
         
 generates:
 * `ResultsInverseDynamics/inverse_dynamics.sto`:
+
+#### So what files do you need?
+* Motion Captured or Unity Generated files:
+	- `subject01_static.trc`
+	- `subject01_walk1.trc`
+	- `subject01_walk1_grf.xml`
+	- `subject01_walk1_grf.mot`

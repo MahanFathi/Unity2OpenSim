@@ -25,10 +25,15 @@ cmake-build-debug
 build
 _deps
 
+# Executables
+main
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
 # OpenSim Generated Files
 err.log
 out.log
-
-# Executables
-main
 

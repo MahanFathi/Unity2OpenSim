@@ -61,3 +61,5 @@ generates:
 	- `subject01_walk1.trc`
 	- `subject01_walk1_grf.xml`
 	- `subject01_walk1_grf.mot`
+
+Proposed Arm Model: [Upper Extremity Dynamic Model](https://simtk.org/projects/upexdyn)

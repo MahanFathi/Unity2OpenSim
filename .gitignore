@@ -7,6 +7,9 @@
 # assets
 assets
 
+# junk dir
+junk
+
 # CMake Stuff
 CMakeLists.txt.user
 CMakeCache.txt

@@ -4,7 +4,7 @@ import json
 class JSONReader(object):
     def __init__(self, json_file):
         json_data = json.load(json_file)
-        self.data = json_data["timeFrames"]
+        self.data = json_data["timeFrames"][1:]     # discard the first frame
         self.marker_names = self.get_marker_names()
         assert len(self.data) > 1, "NOT ENOUGH DATA IN UNITY JSON"
 
@@ -21,7 +21,7 @@ class JSONReader(object):
             frame_dict[marker_name] = {
                 "x": markerInfo["x"],
                 "y": markerInfo["y"],
-                "z": markerInfo["z"],
+                "z": -markerInfo["z"],
             }
         return frame_dict
 

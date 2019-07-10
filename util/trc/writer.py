@@ -44,7 +44,7 @@ class TRCWriter(object):
 
         marker_coordinates = []
         for i in range(len(markers_names)):
-            marker_coordinates.extend([axis.format(i) for axis in ['X{}', 'Y{}', 'Z{}']])
+            marker_coordinates.extend([axis.format(i + 1) for axis in ['X{}', 'Y{}', 'Z{}']])
         self.csv_writer.writerow(['', ''] + marker_coordinates)
         self.csv_writer.writerow([])    # write an empty row
 

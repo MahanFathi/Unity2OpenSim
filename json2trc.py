@@ -31,7 +31,7 @@ def main():
             num_frames=json_reader.get_num_frames(),
             num_markers=json_reader.get_num_markers(),
             units="mm",  # TODO: fix later
-            orig_data_rate=json_reader.get_num_frames(),
+            orig_data_rate=json_reader.get_data_rate(),
             orig_data_start_frame="1",
             orig_num_frames=json_reader.get_num_frames(),
         )

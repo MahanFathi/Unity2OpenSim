@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_34" class="java.beans.XMLDecoder"> 
+ <object class="org.opensim.utils.ApplicationState"> 
+  <void property="stateObjects"> 
+   <void method="put"> 
+    <string>MotionsDB</string> 
+    <object class="org.opensim.view.motions.MotionsDBDescriptor"/> 
+   </void> 
+   <void method="put"> 
+    <string>ViewDB</string> 
+    <object class="org.opensim.view.pub.ViewDBDescriptor"> 
+     <void property="cameraAttributes"> 
+      <void method="add"> 
+       <array class="double" length="13"> 
+        <void index="0"> 
+         <double>0.003215605744968819</double> 
+        </void> 
+        <void index="1"> 
+         <double>-0.22608856896058593</double> 
+        </void> 
+        <void index="2"> 
+         <double>2.0149777386289744</double> 
+        </void> 
+        <void index="3"> 
+         <double>0.003215605744968819</double> 
+        </void> 
+        <void index="4"> 
+         <double>-0.22608856896058593</double> 
+        </void> 
+        <void index="5"> 
+         <double>0.17761831288227864</double> 
+        </void> 
+        <void index="7"> 
+         <double>1.0</double> 
+        </void> 
+        <void index="9"> 
+         <double>-0.0</double> 
+        </void> 
+        <void index="10"> 
+         <double>-0.0</double> 
+        </void> 
+        <void index="11"> 
+         <double>1.0</double> 
+        </void> 
+        <void index="12"> 
+         <double>30.0</double> 
+        </void> 
+       </array> 
+      </void> 
+     </void> 
+     <void property="offsetsList"> 
+      <void method="add"> 
+       <array class="double" length="3"/> 
+      </void> 
+     </void> 
+     <void property="viewNames"> 
+      <void method="add"> 
+       <string>View0</string> 
+      </void> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="put"> 
+    <string>OpenSimDB</string> 
+    <object class="org.opensim.view.pub.OpenSimDBDescriptor"> 
+     <void property="currentModelIndex"> 
+      <int>0</int> 
+     </void> 
+     <void property="fileNames"> 
+      <void method="add"> 
+       <string>D:\GD\upexdyn new\Models\MoBL_ARMS_module6_7_CMC.osim</string> 
+      </void> 
+     </void> 
+     <void property="modelIds"> 
+      <void method="add"> 
+       <int>0</int> 
+      </void> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="put"> 
+    <string>PluginsDB</string> 
+    <object class="org.opensim.view.pub.PluginsDB"/> 
+   </void> 
+   <void method="put"> 
+    <string>CoordinateViewer</string> 
+    <object class="org.opensim.coordinateviewer.CoordinateViewerDescriptor"> 
+     <void property="poses"> 
+      <void method="add"> 
+       <object class="org.opensim.view.ModelPose"> 
+        <void property="coordinateNames"> 
+         <void method="add"> 
+          <string>r_z</string> 
+         </void> 
+         <void method="add"> 
+          <string>sternoclavicular_r2</string> 
+         </void> 
+         <void method="add"> 
+          <string>sternoclavicular_r3</string> 
+         </void> 
+         <void method="add"> 
+          <string>unrotscap_r3</string> 
+         </void> 
+         <void method="add"> 
+          <string>unrotscap_r2</string> 
+         </void> 
+         <void method="add"> 
+          <string>acromioclavicular_r2</string> 
+         </void> 
+         <void method="add"> 
+          <string>acromioclavicular_r3</string> 
+         </void> 
+         <void method="add"> 
+          <string>acromioclavicular_r1</string> 
+         </void> 
+         <void method="add"> 
+          <string>unrothum_r1</string> 
+         </void> 
+         <void method="add"> 
+          <string>unrothum_r3</string> 
+         </void> 
+         <void method="add"> 
+          <string>unrothum_r2</string> 
+         </void> 
+         <void method="add"> 
+          <string>elv_angle</string> 
+         </void> 
+         <void method="add"> 
+          <string>shoulder_elv</string> 
+         </void> 
+         <void method="add"> 
+          <string>shoulder1_r2</string> 
+         </void> 
+         <void method="add"> 
+          <string>shoulder_rot</string> 
+         </void> 
+         <void method="add"> 
+          <string>con_DELT2tx</string> 
+         </void> 
+         <void method="add"> 
+          <string>con_DELT2ty</string> 
+         </void> 
+         <void method="add"> 
+          <string>con_DELT2tz</string> 
+         </void> 
+         <void method="add"> 
+          <string>elbow_flexion</string> 
+         </void> 
+         <void method="add"> 
+          <string>pro_sup</string> 
+         </void> 
+         <void method="add"> 
+          <string>con_BICtx</string> 
+         </void> 
+         <void method="add"> 
+          <string>con_BICty</string> 
+         </void> 
+         <void method="add"> 
+          <string>con_BICtz</string> 
+         </void> 
+         <void method="add"> 
+          <string>deviation</string> 
+         </void> 
+         <void method="add"> 
+          <string>flexion</string> 
+         </void> 
+         <void method="add"> 
+          <string>wrist_hand_r1</string> 
+         </void> 
+         <void method="add"> 
+          <string>wrist_hand_r3</string> 
+         </void> 
+        </void> 
+        <void property="coordinateValues"> 
+         <void method="add"> 
+          <double>0.17453293</double> 
+         </void> 
+         <void method="add"> 
+          <double>-0.1267111887604231</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.05366887911667023</double> 
+         </void> 
+         <void method="add"> 
+          <double>-0.05366887911667023</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.1267111887604231</double> 
+         </void> 
+         <void method="add"> 
+          <double>-0.025656438220146002</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.20734630888177577</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.09320073884023242</double> 
+         </void> 
+         <void method="add"> 
+          <double>-0.09320073884023242</double> 
+         </void> 
+         <void method="add"> 
+          <double>-0.20734630888177577</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.025656438220146002</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.0</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.5235987800000002</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.0</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.0</double> 
+         </void> 
+         <void method="add"> 
+          <double>-0.002816669069483924</double> 
+         </void> 
+         <void method="add"> 
+          <double>-0.013016677770810326</double> 
+         </void> 
+         <void method="add"> 
+          <double>-9.499887063019615E-4</double> 
+         </void> 
+         <void method="add"> 
+          <double>-1.9996508454029915E-8</double> 
+         </void> 
+         <void method="add"> 
+          <double>-2.0E-8</double> 
+         </void> 
+         <void method="add"> 
+          <double>1.075700498388095E-10</double> 
+         </void> 
+         <void method="add"> 
+          <double>4.971136622728416E-10</double> 
+         </void> 
+         <void method="add"> 
+          <double>-2.6739331087439654E-12</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.0</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.0</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.0</double> 
+         </void> 
+         <void method="add"> 
+          <double>0.0</double> 
+         </void> 
+        </void> 
+        <void property="poseName"> 
+         <string>MoBL_ARMS_module6_7_CMC</string> 
+        </void> 
+       </object> 
+      </void> 
+     </void> 
+    </object> 
+   </void> 
+  </void> 
+ </object> 
+</java> 

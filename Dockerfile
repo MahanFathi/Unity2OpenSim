@@ -46,6 +46,11 @@ RUN echo 'export PATH=~/opensim_install/bin:$PATH' >> ~/.bashrc
 RUN cd ~/opensim_install/lib/python2.7/site-packages && python setup.py install
 RUN pip install IPython==5.0
 
+# Alias OpenSim Command-line 
+RUN echo 'alias opensim-cmd="/root/opensim_install/bin/opensim-cmd"' >> ~/.bashrc
+ENV PATH="/root/opensim_install/bin:${PATH}"
+
+# ================================================================================
 # INSTALL ezc3d
 #RUN cd ~ && git clone https://github.com/pyomeca/ezc3d.git
 #RUN cd ~/ezc3d && mkdir build && cd build && cmake .. && make && make install
@@ -64,3 +69,4 @@ RUN pip install IPython==5.0
 #RUN apt-get install -y python-qt4-dev
 #RUN cd ~ && git clone https://github.com/MeVisLab/pythonqt.git && cd pythonqt && qmake && make all
 #RUN cd ~/BTKPython && mkdir build && cd build && cmake .. && make && make install
+# ================================================================================

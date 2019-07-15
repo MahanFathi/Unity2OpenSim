@@ -36,13 +36,13 @@ Plug these scripts into your Unity project and export the marker positions to fi
 Note that GameObject markers should have the right marker names and should be tagged as `OpenSimMarkers`.
 Feel free to change modify the scripts, but the final exported format should be the same as `arm.json`, as the format is assumed in `util/json2trc/json2trc.py` script.
 
-######Portal Dir
+###### Portal Dir
 
 The `./portal` directory is the directory that we are going to mount to the docker container. 
 We will be copying everything we need to and from this directory. 
 This is not usually a good practice but OpenSim uses a lame filesystem for I/O, this way we should be able to avoid the pain.
 
-######Convert JOSN to TRC
+###### Convert JOSN to TRC
 
 Use the `json2trc.py` to convert the Unity exported json to the trc format.
 ```bash
@@ -50,7 +50,7 @@ cp ./assets/samples/unity/arm.json ./portal
 python3 ./util/json2trc/json2trc.py --json-file=./portal/arm.json --trc-file=./portal/arm.trc
 ```
 
-######OpenSim Static Scaling Tool
+###### OpenSim Static Scaling Tool
 
 Here's where we make use of OpenSim models. 
 You can find the scaling assets of the arm model under `assets/arm/ModelFiles/InputFiles_module5_scaleIK`. 
@@ -100,7 +100,7 @@ Now that we have everything sorted out, OpenSim should be able to scale the mode
 docker run -v "$PWD"/portal/:/tmp/ opensim:opensim opensim-cmd run-tool /tmp/MoBL_ARMS_module5_Scale_Setup.xml
 ```
 
-######OpenSim Inverse Kinematic Tool
+###### OpenSim Inverse Kinematic Tool
 
 Kinematic settings were already in the `assets/arm/ModelFiles/InputFiles_module5_scaleIK` directory, so no need to `cp` them again in the `portal`.
 We should plug the `scaled.osim` model and `arm.trc` reference motion into the `MoBL_ARMS_module5_IK_Setup.xml` and to further infer the muscle activations we need to output the kinematic plausible motion into a file.
@@ -126,7 +126,7 @@ Run the following command to get the `out.mot` output reference motion:
 docker run -it -v "$PWD"/portal/:/tmp/ opensim:opensim opensim-cmd run-tool /tmp/MoBL_ARMS_module5_IK_Setup.xml
 ```
 
-######OpenSim Computed Muscle Control
+###### OpenSim Computed Muscle Control
 
 CMC settings lay in the `assets/arm/ModelFiles/InputFiles_module6_CMC` directory. 
 `cp` them in `portal` and change the setup file accordingly:

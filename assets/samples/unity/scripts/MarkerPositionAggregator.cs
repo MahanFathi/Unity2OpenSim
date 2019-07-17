@@ -35,7 +35,7 @@ public class TimeFrames
 
 public class MarkerPositionAggregator : MonoBehaviour
 {
-    public string savePath;
+    public string exportDirectory = "./exports/";
     GameObject[] markerObjects;
     List<TimeFrame> timeFrames = new List<TimeFrame>();
  
@@ -66,6 +66,12 @@ public class MarkerPositionAggregator : MonoBehaviour
         TimeFrames timeFramesObject = new TimeFrames();
         timeFramesObject.timeFrames = new TimeFrame[timeFrames.Count];
         timeFramesObject.timeFrames = timeFrames.ToArray();
+
+        if (!(Directory.Exists(exportDirectory))) {
+            Directory.CreateDirectory(exportDirectory);
+        }
+
+        string savePath = Path.Combine(exportDirectory, this.transform.name + ".json");
 
         var json = JsonConvert.SerializeObject(timeFramesObject);
         using (var streamWriter = File.CreateText(savePath)) {

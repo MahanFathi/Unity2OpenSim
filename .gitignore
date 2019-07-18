@@ -13,6 +13,9 @@ junk
 # portal dir
 # portal
 
+# ctags
+tags
+
 # CMake Stuff
 CMakeLists.txt.user
 CMakeCache.txt

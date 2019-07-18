@@ -47,7 +47,7 @@ This is not usually a good practice but OpenSim uses a lame filesystem for I/O, 
 Use the `json2trc.py` to convert the Unity exported json to the trc format.
 ```bash
 cp ./assets/samples/unity/arm.json ./portal
-python3 ./util/json2trc/json2trc.py --json-file=./portal/arm.json --trc-file=./portal/arm.trc
+python3 ./util/json2trc/json2trc.py --json-file=./portal/arm.json --trc-file=./portal/arm.trc --scale-factor 273.0
 ```
 
 ###### OpenSim Static Scaling Tool

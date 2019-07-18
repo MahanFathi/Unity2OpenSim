@@ -19,9 +19,9 @@ class JSONReader(object):
         for markerInfo in time_frame["markerInfos"]:
             marker_name = markerInfo["markerName"]
             frame_dict[marker_name] = {
-                "x": markerInfo["x"],
-                "y": markerInfo["y"],
-                "z": -markerInfo["z"],
+                "x": float(markerInfo["x"]),
+                "y": float(markerInfo["y"]),
+                "z": -float(markerInfo["z"]),
             }
         return frame_dict
 

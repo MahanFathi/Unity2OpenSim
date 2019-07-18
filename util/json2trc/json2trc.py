@@ -18,7 +18,16 @@ def main():
         help="path to destination trc file",
     )
 
+    parser.add_argument(
+        "--scale-factor",
+        default=1.,
+        metavar="FILE",
+        help="path to destination trc file",
+    )
+
     args = parser.parse_args()
+
+    scale_factor = float(args.scale_factor)
 
     with open(args.json_file, 'r') as json_file, open(args.trc_file, 'w') as trc_file:
         json_reader = JSONReader(json_file)
@@ -45,9 +54,9 @@ def main():
             time = frame["time"]
             marker_coors = []
             for marker_name in marker_names:
-                marker_coors.extend([frame[marker_name]['x'],
-                                     frame[marker_name]['y'],
-                                     frame[marker_name]['z']])
+                marker_coors.extend([frame[marker_name]['x'] * scale_factor,
+                                     frame[marker_name]['y'] * scale_factor,
+                                     frame[marker_name]['z'] * scale_factor])
             trc_writer.add_frame(frame_num, time, marker_coors)
 
 

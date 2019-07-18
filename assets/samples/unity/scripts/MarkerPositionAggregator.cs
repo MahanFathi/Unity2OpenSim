@@ -42,7 +42,8 @@ public class MarkerPositionAggregator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        markerObjects = GameObject.FindGameObjectsWithTag("OpenSimMarker");
+        GameObject[] allMarkerObjects = GameObject.FindGameObjectsWithTag("OpenSimMarker");
+        markerObjects = Array.FindAll(allMarkerObjects, mo => mo.transform.root.name == transform.name);
     }
 
     // Update is called once per frame

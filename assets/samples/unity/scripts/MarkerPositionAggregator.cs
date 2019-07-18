@@ -63,6 +63,8 @@ public class MarkerPositionAggregator : MonoBehaviour
 
     void OnApplicationQuit() 
     {
+
+        Int32 unixTimestamp = (Int32)(System.DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
         TimeFrames timeFramesObject = new TimeFrames();
         timeFramesObject.timeFrames = new TimeFrame[timeFrames.Count];
         timeFramesObject.timeFrames = timeFrames.ToArray();
@@ -71,7 +73,7 @@ public class MarkerPositionAggregator : MonoBehaviour
             Directory.CreateDirectory(exportDirectory);
         }
 
-        string savePath = Path.Combine(exportDirectory, this.transform.name + ".json");
+        string savePath = Path.Combine(exportDirectory, this.transform.name + "_" + unixTimestamp + ".json");
 
         var json = JsonConvert.SerializeObject(timeFramesObject);
         using (var streamWriter = File.CreateText(savePath)) {

@@ -1,6 +1,26 @@
 import argparse
+import re
 from json_util import JSONReader
 from trc_util import TRCWriter
+
+
+class CoorReorder(object):
+    def __init__(self, axes_order):
+        self.axes_dict = {'x': 0, 'y': 1, 'z': 2}
+        self.re_pattern = r"(-?[xyz])(-?[xyz])(-?[xyz])"
+        self.axes = re.match(self.re_pattern, axes_order).groups()
+        assert len(self.axes) is 3
+        self.coor_order = []
+        self.coor_sign = []
+        for axis in self.axes:
+            self.coor_order.append(self.axes_dict[axis[-1]])
+            if '-' in axis:
+                self.coor_sign.append(-1)
+            else:
+                self.coor_sign.append(1)
+
+    def __call__(self, coors):
+        return [sign * coors[order] for order, sign in zip(self.coor_order, self.coor_sign)]
 
 
 def main():
@@ -21,13 +41,22 @@ def main():
     parser.add_argument(
         "--scale-factor",
         default=1.,
-        metavar="FILE",
+        metavar="SCALE",
+        help="path to destination trc file",
+    )
+
+    parser.add_argument(
+        "--axes-order",
+        default="xyz",
+        metavar="ORDER",
         help="path to destination trc file",
     )
 
     args = parser.parse_args()
 
     scale_factor = float(args.scale_factor)
+
+    coor_reorderer = CoorReorder(args.axes_order)
 
     with open(args.json_file, 'r') as json_file, open(args.trc_file, 'w') as trc_file:
         json_reader = JSONReader(json_file)
@@ -54,9 +83,15 @@ def main():
             time = frame["time"]
             marker_coors = []
             for marker_name in marker_names:
-                marker_coors.extend([frame[marker_name]['x'] * scale_factor,
-                                     frame[marker_name]['y'] * scale_factor,
-                                     frame[marker_name]['z'] * scale_factor])
+                marker_coors.extend(
+                    coor_reorderer(
+                        [
+                            frame[marker_name]['x'] * scale_factor,
+                            frame[marker_name]['y'] * scale_factor,
+                            frame[marker_name]['z'] * scale_factor,
+                        ]
+                    )
+                )
             trc_writer.add_frame(frame_num, time, marker_coors)
 
 

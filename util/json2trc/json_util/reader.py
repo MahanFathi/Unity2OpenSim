@@ -21,7 +21,7 @@ class JSONReader(object):
             frame_dict[marker_name] = {
                 "x": float(markerInfo["x"]),
                 "y": float(markerInfo["y"]),
-                "z": -float(markerInfo["z"]),
+                "z": float(markerInfo["z"]),
             }
         return frame_dict
 
